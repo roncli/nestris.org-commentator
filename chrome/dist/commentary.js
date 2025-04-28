@@ -549,7 +549,7 @@ class Commentary {
 
         const rightLines = [
             "And on the right,",
-            "And their oppenent,",
+            "And their opponent,",
             "And on the red side,"
         ];
 
