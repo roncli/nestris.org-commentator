@@ -320,18 +320,23 @@ class Commentary {
         "Bangarang Tetris for {{playerName}}"
     ];
 
-    // MARK: static #numberToSpeech
+    // MARK: static numberToSpeech
     /**
      * Converts a number to a speech string.
      * @param {number} number The number.
      * @param {boolean} [entireNumber] Whether to include the entire number.
      * @returns {string} The speech string for the number.
      */
-    static #numberToSpeech(number, entireNumber) {
+    static numberToSpeech(number, entireNumber) {
+        // If the number is zero, return "zero".
+        if (number === 0) {
+            return Commentary.#numbers[0];
+        }
+
         let string = "";
 
-        // Always speak the entire number if we get a hey now out of it.
-        if (number % 1000 === 420 || number % 100 === 69) {
+        // Always speak the entire number if it's under 1000 or we get a hey now out of it.
+        if (number < 1000 || number % 1000 === 420 || number % 100 === 69) {
             entireNumber = true;
         }
 
@@ -362,7 +367,7 @@ class Commentary {
             }
             string += `${Commentary.#numbers[thousand]} `;
 
-            if ((entireNumber || hundredThousand === 0) && thousand !== 69 && (hundredThousand !== 4 || thousand !== 20)) {
+            if (hundredThousand === 0 && thousand !== 69 && (hundredThousand !== 4 || thousand !== 20)) {
                 string += "thousand ";
             }
         }
@@ -377,18 +382,11 @@ class Commentary {
 
             // Hundreds.
             if (hundred > 0) {
-                string += `${Commentary.#numbers[hundred]} `;
+                string += `${Commentary.#numbers[hundred]} hundred `;
             }
 
             // Units.
-            if (unit === 0) {
-                if (hundred > 0) {
-                    string += "hundred ";
-                }
-            } else {
-                if (hundred > 0 && unit < 10) {
-                    string += "oh ";
-                }
+            if (unit > 0) {
                 string += `${Commentary.#numbers[unit]} `;
             }
 
@@ -410,7 +408,7 @@ class Commentary {
      * @returns {string} The commentary string.
      */
     static chasedown(name1, name2, score1, levelCap) {
-        return `${name1} ${levelCap ? `has reached ${levelCap} and is done` : "has topped out"}. ${name2} is in a chase down and needs to get to ${Commentary.#numberToSpeech(Math.floor((score1 + 1000) / 1000) * 1000)}.`;
+        return `${name1} ${levelCap ? `has reached ${levelCap} and is done` : "has topped out"}. ${name2} is in a chase down and needs to get to ${Commentary.numberToSpeech(Math.floor((score1 + 1000) / 1000) * 1000)}.`;
     }
 
     // MARK: static chasedownComplete
@@ -421,7 +419,7 @@ class Commentary {
      * @returns {string} The commentary string.
      */
     static chasedownComplete(name, score) {
-        return `And with a score of ${Commentary.#numberToSpeech(score)}, ${name} has completed the chasedown and takes the win.  Play this out!`;
+        return `And with a score of ${Commentary.numberToSpeech(score)}, ${name} has completed the chasedown and takes the win.  Play this out!`;
     }
 
     // MARK: static chasedownFailed
@@ -436,12 +434,12 @@ class Commentary {
      */
     static chasedownFailed(name1, name2, score1, score2, levelCap) {
         if (score1 === score2) {
-            return `${name1} ${levelCap ? `has reached ${levelCap} and is done` : "has topped out"}.  Both players have exactly ${Commentary.#numberToSpeech(score2, true)}.  The game ends in a tie!`;
+            return `${name1} ${levelCap ? `has reached ${levelCap} and is done` : "has topped out"}.  Both players have exactly ${Commentary.numberToSpeech(score2, true)}.  The game ends in a tie!`;
         }
 
         const useEntireNumber = Math.floor(score1 / 1000) === Math.floor(score2 / 1000);
 
-        return `${name1} ${levelCap ? `has reached ${levelCap} and is done` : "has topped out"} at ${Commentary.#numberToSpeech(score1, useEntireNumber)}.  And with a score of ${Commentary.#numberToSpeech(score2, useEntireNumber)}, ${name2} holds on and takes the win!`;
+        return `${name1} ${levelCap ? `has reached ${levelCap} and is done` : "has topped out"} at ${Commentary.numberToSpeech(score1, useEntireNumber)}.  And with a score of ${Commentary.numberToSpeech(score2, useEntireNumber)}, ${name2} holds on and takes the win!`;
     }
 
     // MARK: static drought
@@ -503,7 +501,7 @@ class Commentary {
      * @returns {string} The commentary string.
      */
     static halfway(name, level, score) {
-        return `${name} is at ${Commentary.#numberToSpeech(score)} halfway through ${level}.`;
+        return `${name} is at ${Commentary.numberToSpeech(score)} halfway through ${level}.`;
     }
 
     // MARK: static introductions
@@ -534,9 +532,9 @@ class Commentary {
             "rated at {{rating}}"
         ];
 
-        intro += ` ${rating[Math.floor(Math.random() * rating.length)].replace("{{rating}}", Commentary.#numberToSpeech(player1.trophies, true))}`;
+        intro += ` ${rating[Math.floor(Math.random() * rating.length)].replace("{{rating}}", Commentary.numberToSpeech(player1.trophies, true))}`;
 
-        intro += ` and a PB of ${Commentary.#numberToSpeech(player1.highscore)},`;
+        intro += ` and a PB of ${Commentary.numberToSpeech(player1.highscore)},`;
 
         const nameLines = [
             "welcome in {{playerName}}!",
@@ -557,9 +555,9 @@ class Commentary {
 
         intro += ` ${player2.platform === "OCR" ? "a console player" : player2.platform === "ONLINE" ? "an online player" : "a bot"}`;
 
-        intro += ` ${rating[Math.floor(Math.random() * rating.length)].replace("{{rating}}", Commentary.#numberToSpeech(player2.trophies, true))}`;
+        intro += ` ${rating[Math.floor(Math.random() * rating.length)].replace("{{rating}}", Commentary.numberToSpeech(player2.trophies, true))}`;
 
-        intro += ` and a PB of ${Commentary.#numberToSpeech(player2.highscore)},`;
+        intro += ` and a PB of ${Commentary.numberToSpeech(player2.highscore)},`;
 
         intro += ` ${nameLines[Math.floor(Math.random() * nameLines.length)].replace("{{playerName}}", name2)} ,,`;
 
@@ -591,10 +589,10 @@ class Commentary {
         }
 
         if (score1 >= score2) {
-            return `${name1} is ahead by ${Commentary.#numberToSpeech(lead)}.`;
+            return `${name1} is ahead by ${Commentary.numberToSpeech(lead)}.`;
         }
 
-        return `${name2} is ahead by ${Commentary.#numberToSpeech(lead)}.`;
+        return `${name2} is ahead by ${Commentary.numberToSpeech(lead)}.`;
     }
 
     // MARK: static leadCheckChasedown
@@ -612,7 +610,7 @@ class Commentary {
             return "Almost there...";
         }
 
-        return `${name1} still needs ${Commentary.#numberToSpeech(lead)} to chase down ${Commentary.#numberToSpeech(Math.floor((score2 + 1000) / 1000) * 1000)}.`;
+        return `${name1} still needs ${Commentary.numberToSpeech(lead)} to chase down ${Commentary.numberToSpeech(Math.floor((score2 + 1000) / 1000) * 1000)}.`;
     }
 
     // MARK: static levelMilestone
@@ -624,7 +622,7 @@ class Commentary {
      * @returns {string} The commentary string.
      */
     static levelMilestone(name, level, score) {
-        return `${name} enters ${level} at ${Commentary.#numberToSpeech(score)}.`;
+        return `${name} enters ${level} at ${Commentary.numberToSpeech(score)}.`;
     }
 
     // MARK: static maxout
@@ -661,7 +659,7 @@ class Commentary {
      * @returns {string} The commentary string.
      */
     static mullen(name1, name2, score1, score2, levelCap) {
-        return `${name1} ${levelCap ? `has reached ${levelCap} and is done` : "has topped out"} at ${Commentary.#numberToSpeech(score1)}.  And with a score of ${Commentary.#numberToSpeech(score2)}, ${name2} has won the game.  Play this out!`;
+        return `${name1} ${levelCap ? `has reached ${levelCap} and is done` : "has topped out"} at ${Commentary.numberToSpeech(score1)}.  And with a score of ${Commentary.numberToSpeech(score2)}, ${name2} has won the game.  Play this out!`;
     }
 
     // MARK: static rollover
@@ -700,10 +698,10 @@ class Commentary {
         const useEntireNumber = Math.floor(score1 / 1000) === Math.floor(score2 / 1000);
 
         if (score1 >= score2) {
-            return `${Commentary.#numberToSpeech(score1, useEntireNumber)} for ${name1}, ${Commentary.#numberToSpeech(score2, useEntireNumber)} for ${name2}.`;
+            return `${Commentary.numberToSpeech(score1, useEntireNumber)} for ${name1}, ${Commentary.numberToSpeech(score2, useEntireNumber)} for ${name2}.`;
         }
 
-        return `${Commentary.#numberToSpeech(score2, useEntireNumber)} for ${name2}, ${Commentary.#numberToSpeech(score1, useEntireNumber)} for ${name1}.`;
+        return `${Commentary.numberToSpeech(score2, useEntireNumber)} for ${name2}, ${Commentary.numberToSpeech(score1, useEntireNumber)} for ${name1}.`;
     }
 
     // MARK: static scoreCheckChasedown
@@ -715,7 +713,7 @@ class Commentary {
      * @returns {string} The commentary string.
      */
     static scoreCheckChasedown(name1, score1, score2) {
-        return `${name1} is at ${Commentary.#numberToSpeech(score1)} and still needs to chase down ${Commentary.#numberToSpeech(Math.floor((score2 + 1000) / 1000) * 1000)}`;
+        return `${name1} is at ${Commentary.numberToSpeech(score1)} and still needs to chase down ${Commentary.numberToSpeech(Math.floor((score2 + 1000) / 1000) * 1000)}`;
     }
 
     // MARK: static tetris
@@ -745,7 +743,7 @@ class Commentary {
      * @returns {string} The commentary string.
      */
     static transition(name, level, score) {
-        return `${name} has transitioned to ${level} at ${Commentary.#numberToSpeech(score)}.`;
+        return `${name} has transitioned to ${level} at ${Commentary.numberToSpeech(score)}.`;
     }
 }
 
