@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "nestris.org Commentator",
+    "version": "0.1.0",
+    "description": "Adds TTS commentary to nestris.org games.",
+    "permissions": ["scripting", "activeTab", "webNavigation", "storage"],
+    "host_permissions": ["https://nestris.org/"],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["inject.js"],
+            "matches": ["https://nestris.org/*"]
+        }
+    ],
+    "content_scripts": [
+        {
+            "matches": ["https://nestris.org/*"],
+            "js": ["intercept.js"],
+            "run_at": "document_start"
+        }
+    ]
+}

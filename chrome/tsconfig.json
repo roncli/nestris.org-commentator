@@ -1,0 +1,18 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "checkJs": true,
+        "esModuleInterop": true,
+        "lib": ["DOM", "ES2019"],
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "outDir": "./.vscode/ts",
+        "resolveJsonModule": false,
+        "target": "ES2019",
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "rootDir": "./"
+    },
+    "include": ["**/*.js", "**/*.d.ts"],
+    "exclude": ["node_modules", "dist"]
+}
