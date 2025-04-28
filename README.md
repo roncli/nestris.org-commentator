@@ -1,10 +1,10 @@
 # nestris.org-commentator
 
-A browser extension for nestris.org that provides generated commentary for 2-player battles via text-to-speech.
+A browser extension for [nestris.org](https://nestris.org) that provides generated commentary for 2-player battles via text-to-speech.
 
-### Coming Soon
+### Coming Soon to Firefox
 
-A Firefox extension for nestris.org-commentator is currently in development and will be available soon!
+This is Chrome-only right now, but a Firefox extension for nestris.org-commentator is currently in development and will be available soon!
 
 ## Installation in Chrome
 
