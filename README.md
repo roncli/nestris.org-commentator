@@ -10,7 +10,7 @@ This is Chrome-only right now, but a Firefox extension for nestris.org-commentat
 
 This extension is in beta, so you will need to enable "Developer mode" to install it. To install the extension into Chrome from a release:
 
-1. Download the `nestris.org-commentator.crx` file from the latest release.
+1. Download the `nestris.org-commentator.crx` file from the [latest Chrome release](https://github.com/roncli/nestris.org-commentator/releases).
 2. Open Chrome and navigate to `chrome://extensions/`.
 3. Enable "Developer mode" using the toggle in the top-right corner.
 4. Drag and drop the `nestris.org-commentator.crx` file onto the extensions page.
