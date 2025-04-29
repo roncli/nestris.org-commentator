@@ -247,7 +247,7 @@ class GameStatus {
                 this.sendCommentary(Commentary.tetris(this.game.names[playerId]));
             }
 
-            if (this.halfway && oldLines < this.halfway && lines >= this.halfway) {
+            if (this.halfway && oldLines < this.halfway && lines >= this.halfway && lines - oldLines <= 4) {
                 // The player has reached the halfway point.
                 this.sendCommentary(Commentary.halfway(this.game.names[playerId], this.game.level[playerId], this.game.score[playerId]));
             }
