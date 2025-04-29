@@ -21,19 +21,27 @@
                 if (data instanceof Blob) {
                     // Convert Blob to ArrayBuffer asynchronously
                     data.arrayBuffer().then((arrayBuffer) => {
-                        chrome.runtime.sendMessage({
-                            action: "websocketBlob",
-                            data: Array.from(new Uint8Array(arrayBuffer))
-                        });
+                        try {
+                            chrome.runtime.sendMessage({
+                                action: "websocketBlob",
+                                data: Array.from(new Uint8Array(arrayBuffer))
+                            });
+                        } catch (err) {
+                            console.error("Failed to send message:", err);
+                        }
                     }).catch((error) => {
                         console.error("Failed to convert Blob to ArrayBuffer:", error);
                     });
                 } else {
-                    // Send non-Blob data synchronously
-                    chrome.runtime.sendMessage({
-                        action: "websocketMessage",
-                        data
-                    });
+                    try {
+                        // Send non-Blob data synchronously
+                        chrome.runtime.sendMessage({
+                            action: "websocketMessage",
+                            data
+                        });
+                    } catch (err) {
+                        console.error("Failed to send message:", err);
+                    }
                 }
 
                 break;
