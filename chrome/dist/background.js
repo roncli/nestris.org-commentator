@@ -172,9 +172,11 @@ class Background {
                     case "connection_successful":
                     case "found_opponent":
                     case "friend_update":
+                    case "go_to_page":
                     case "num_queuing_players":
                     case "on_global_chat_message":
                     case "ping":
+                    case "server_announcement":
                     case "spectator_count":
                     case "trophy_change":
                         break;
