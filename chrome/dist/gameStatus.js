@@ -554,6 +554,7 @@ class GameStatus {
     stopUpdates() {
         if (this.game.updateInterval) {
             clearInterval(this.game.updateInterval);
+            this.game.updateInterval = void 0;
         }
     }
 }
