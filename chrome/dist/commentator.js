@@ -70,7 +70,7 @@
 
                 const msg = new SpeechSynthesisUtterance(text);
                 msg.lang = "en-US";
-                msg.rate = speakSlowly ? 1 : 1.8;
+                msg.rate = speakSlowly ? 1.4 : 1.8;
                 msg.pitch = 1;
                 msg.volume = 0.5;
                 msg.voice = Commentator.#voice;
