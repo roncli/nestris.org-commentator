@@ -100,8 +100,8 @@ class GameStatus {
      * @returns {void}
      */
     handleEval(playerId, evalScore) {
-        // Bail if last eval check was within 10 seconds.
-        if (Date.now() - this.game.lastEvalCheck[playerId] < 15000) {
+        // Bail if last eval check was within 10 seconds, or the eval score is not valid.
+        if (Date.now() - this.game.lastEvalCheck[playerId] < 15000 || !evalScore) {
             return;
         }
 
