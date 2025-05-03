@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "nestris.org Commentator",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Adds TTS commentary to nestris.org games.",
     "permissions": ["scripting", "activeTab", "webNavigation", "storage"],
     "host_permissions": ["https://nestris.org/"],

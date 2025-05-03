@@ -32,5 +32,13 @@ To set up the project for development in Chrome:
 
 ## Version History
 
+### v0.2.0 - 5/3/2025
+* Improved talking about numbers for numbers that are read in their entirety.
+* No longer will occasionally think the board is clean right as a player tops out.
+* Halfway point no longer called out when joining a game in progress.
+* Fixed typo for "opponent".
+* Introductions are announced quicker.
+* Various other fixes and error handling.
+
 ### v0.1.0 - 4/27/2025
 * Initial release.
