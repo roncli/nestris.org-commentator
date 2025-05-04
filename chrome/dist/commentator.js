@@ -63,7 +63,7 @@
                     chrome.runtime.sendMessage({action: "heyNow", amount: heyNowCount}, (response) => {
                         if (response && response.count) {
                             this.heyNowCounter.innerText = `Hey now counter: ${response.count}`;
-                            this.#speak(`The HEY NOW counter is at ${response.count}.`);
+                            this.#speakQueue.then().catch().then(() => this.#speak(`The HEY NOW counter is at ${response.count}.`));
                         }
                     });
                 }
@@ -216,11 +216,11 @@
                     await this.#speakQueue;
 
                     if (data.isIntroduction) {
-                        this.#speakQueue = this.#speak(data.commentary, true).then().catch().then(() => {
+                        this.#speakQueue = this.#speakQueue.then().catch().then(() => this.#speak(data.commentary, true).then(() => {
                             chrome.runtime.sendMessage({action: "introComplete"});
-                        });
+                        }));
                     } else {
-                        this.#speakQueue = this.#speak(data.commentary);
+                        this.#speakQueue = this.#speakQueue.then().catch().then(() => this.#speak(data.commentary));
                     }
                     break;
 
@@ -232,9 +232,9 @@
                     await this.#speakQueue;
 
                     // Speak the end game message.
-                    this.#speakQueue = this.#speak(data.commentary).then().catch().then(() => {
+                    this.#speakQueue = this.#speakQueue.then().catch().then(() => this.#speak(data.commentary).then(() => {
                         this.reset();
-                    });
+                    }));
                     break;
             }
         }
