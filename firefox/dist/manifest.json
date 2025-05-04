@@ -1,0 +1,32 @@
+{
+    "manifest_version": 3,
+    "name": "nestris.org Commentator",
+    "version": "0.2.0",
+    "description": "Adds TTS commentary to nestris.org games.",
+    "permissions": ["scripting", "activeTab", "webNavigation", "storage"],
+    "host_permissions": ["https://nestris.org/"],
+    "background": {
+        "scripts": ["background.js"],
+        "type": "module"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["inject.js"],
+            "matches": ["https://nestris.org/*"]
+        }
+    ],
+    "content_scripts": [
+        {
+            "matches": ["https://nestris.org/*"],
+            "js": ["intercept.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{ab9b6d84-1e31-4709-a177-b3d2a18d9d3e}",
+            "strict_min_version": "109.0",
+            "update_url": "https://roncli.com/files/nestris.org-commentator-firefox.json"
+        }
+    }
+}

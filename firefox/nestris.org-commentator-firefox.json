@@ -1,0 +1,12 @@
+{
+    "addons": {
+        "{ab9b6d84-1e31-4709-a177-b3d2a18d9d3e}": {
+            "updates": [
+                {
+                    "version": "0.2.0",
+                    "update_link": "https://roncli.com/files/nestris.org-commentator.xpi"
+                }                
+            ]
+        }
+    }
+}
