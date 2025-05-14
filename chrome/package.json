@@ -2,7 +2,7 @@
   "devDependencies": {
     "@eslint/js": "9.26.0",
     "@stylistic/eslint-plugin": "4.2.0",
-    "@types/chrome": "0.0.320",
+    "@types/chrome": "0.0.322",
     "eslint-plugin-jsdoc": "50.6.16"
   }
 }
