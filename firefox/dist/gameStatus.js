@@ -156,7 +156,8 @@ class GameStatus {
         if (data.roomState.players["0"].userid === me || data.roomState.players["1"].userid === me) {
             this.game.myPlayerId = this.game.swap ? 1 : 0;
         }
-
+        this.game.cap = data.roomState.levelCap;
+        
         // Calculate the halfway point for the starting level.
         this.halfway = Math.floor(this.game.startLevel / 16) * 50 + Math.min((this.game.startLevel % 16) * 5 + 5, 50);
 
@@ -205,7 +206,7 @@ class GameStatus {
                 this.sendCommentary(Commentary.transition(this.game.names[playerId], level, this.game.score[playerId]));
             }
 
-            if (level === 24 || this.game.cap && level === 34 || level >= 35 && level % 5 === 0) {
+            if (level === 24 || this.game.cap && level === 34 || !this.game.cap && level >= 35 && level % 5 === 0) {
                 // The player has reached a level milestone.
                 this.sendCommentary(Commentary.levelMilestone(this.game.names[playerId], level, this.game.score[playerId]));
             }
