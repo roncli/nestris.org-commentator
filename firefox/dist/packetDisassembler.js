@@ -114,13 +114,13 @@ class PacketDisassembler {
             case 5:
                 // Full board.
                 packet.type = "fullBoard";
-                this.delay = this.#getInt(12);
+                packet.delay = this.#getInt(12);
                 this.#discardBits(400);
                 break;
             case 6:
                 // Abbreviated board.
                 packet.type = "abbreviatedBoard";
-                this.delay = this.#getInt(12);
+                packet.delay = this.#getInt(12);
                 this.#discardBits(11);
                 break;
             case 7:
@@ -137,7 +137,7 @@ class PacketDisassembler {
             case 9: {
                 // Countdown.
                 packet.type = "countdown";
-                this.delay = this.#getInt(12);
+                packet.delay = this.#getInt(12);
 
                 const countdown = this.#getInt(4);
 
@@ -164,7 +164,7 @@ class PacketDisassembler {
             case 11:
                 // Full state.
                 packet.type = "fullState";
-                this.delay = this.#getInt(12);
+                packet.delay = this.#getInt(12);
                 this.#discardBits(403);
                 packet.score = this.#getInt(26);
                 packet.level = this.#getInt(8);
