@@ -55,6 +55,7 @@ class GameStatus {
          *  updateInterval: number
          *  cap: number
          *  inIntroductions: boolean
+         *  introduced: boolean
          *  swap: boolean
          *  myPlayerId: number
          * }}
@@ -78,6 +79,7 @@ class GameStatus {
             updateInterval: void 0,
             cap: void 0,
             inIntroductions: false,
+            introduced: false,
             swap: false,
             myPlayerId: void 0
         };
@@ -167,7 +169,7 @@ class GameStatus {
      * @returns {void}
      */
     handleIntroductions() {
-        this.inIntroductions = true;
+        this.game.inIntroductions = true;
 
         if (this.game.swap) {
             this.sendCommentary(Commentary.introductions(this.game.names[1], this.game.names[0], this.game.players[1], this.game.players[0]), true);
@@ -274,16 +276,6 @@ class GameStatus {
                 this.game.rollover[packet.playerId] = false;
                 this.game.toppedOut[packet.playerId] = false;
                 this.game.lastPlacement[packet.playerId] = Date.now();
-
-                if (this.game.lastPlacement[0] && this.game.lastPlacement[1]) {
-                    // Introduce the players.
-                    this.handleIntroductions();
-
-                    // If both players have started the game, start score checks if they are not already running.
-                    if (this.inRoom && !this.game.updateInterval) {
-                        this.game.updateInterval = setInterval(this.scoreCheck.bind(this), 30000);
-                    }
-                }
                 break;
             case "gameEnd":
                 // A player's game has ended.
@@ -310,6 +302,11 @@ class GameStatus {
                         this.game.lastEvalCheck[packet.playerId] = Date.now();
                         this.game.lastEvalCheckEval[packet.playerId] = this.game.eval[packet.playerId];
                     }
+                }
+
+                if (this.inRoom && !this.game.introduced && this.game.lastPlacement[0] && this.game.lastPlacement[1]) {
+                    // Introduce the players.
+                    this.handleIntroductions();
                 }
 
                 break;
@@ -408,8 +405,8 @@ class GameStatus {
         }
 
         // If we're in introductions... not anymore!
-        if (this.inIntroductions) {
-            this.inIntroductions = false;
+        if (this.game.inIntroductions) {
+            this.game.inIntroductions = false;
         }
 
         // Stop giving score updates.
@@ -446,7 +443,16 @@ class GameStatus {
      * @returns {void}
      */
     introComplete() {
-        this.inIntroductions = false;
+        this.game.inIntroductions = false;
+    }
+
+    // MARK: introStarted
+    /**
+     * Handles the start of introductions.
+     * @returns {void}
+     */
+    introStarted() {
+        this.game.introduced = true;
     }
 
     // MARK: scoreCheck
@@ -535,11 +541,9 @@ class GameStatus {
         // Check if the Firefox tab exists.
         try {
             if (!browser.tabs || !await browser.tabs.get(this.tabId)) {
-                console.log("=== Tab Closed ===");
                 return;
             }
         } catch {
-            console.log("=== Tab Closed ===");
             return;
         }
 

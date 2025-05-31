@@ -4,6 +4,8 @@
      * A class to do commentary for a nestris.org game.
      */
     class Commentator {
+        #introReceived = false;
+        
         /** @type {SpeechSynthesisVoice} */
         static #voice;
 
@@ -216,6 +218,13 @@
                     await this.#speakQueue;
 
                     if (data.isIntroduction) {
+                        if (this.#introReceived) {
+                            return;
+                        }
+                        this.#introReceived = true;
+
+                        browser.runtime.sendMessage({action: "introStarted"});
+
                         this.#speakQueue = this.#speakQueue.then().catch().then(() => this.#speak(data.commentary, true).then(() => {
                             browser.runtime.sendMessage({action: "introComplete"});
                         }));

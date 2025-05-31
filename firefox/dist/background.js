@@ -157,6 +157,14 @@ class Background {
                 game.handleLinesChange(message.playerId, message.lines);
                 break;
             }
+            case "introStarted": {
+                const game = Background.#games.find((g) => g.tabId === tabId);
+                if (game) {
+                    game.introStarted();
+                    game.inRoom = sender.tab.url.startsWith("https://nestris.org/online/room?");
+                }
+                break;
+            }
             case "introComplete": {
                 const game = Background.#games.find((g) => g.tabId === tabId);
                 if (game) {
