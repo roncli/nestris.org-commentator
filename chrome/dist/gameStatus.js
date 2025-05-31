@@ -12,13 +12,13 @@ class GameStatus {
      * @returns {number} The evaluated level.  5 is best, 1 is worst.
      */
     static #evalLevel(score) {
-        if (score >= -20) {
+        if (score >= -25) {
             return 5;
-        } else if (score >= -120) {
+        } else if (score >= -150) {
             return 4;
-        } else if (score >= -250) {
+        } else if (score >= -300) {
             return 3;
-        } else if (score >= -500) {
+        } else if (score >= -600) {
             return 2;
         }
 
@@ -102,8 +102,8 @@ class GameStatus {
      * @returns {void}
      */
     handleEval(playerId, evalScore) {
-        // Bail if last eval check was within 10 seconds, or the eval score is not valid.
-        if (Date.now() - this.game.lastEvalCheck[playerId] < 15000 || !evalScore) {
+        // Bail if last eval check was within 15 seconds, or the eval score is not valid.
+        if (Date.now() - this.game.lastEvalCheck[playerId] < 15000) {
             return;
         }
 
@@ -321,9 +321,12 @@ class GameStatus {
                 }, packet.delay);
                 break;
             case "stackrabbitPlacement":
-                // A Stackrabbit evaluation for the most recent placement.
-                this.game.eval[packet.playerId] = packet.playerEval;
-                this.handleEval(packet.playerId, packet.playerEval);
+                // Only update evaluation if the eval is valid.
+                if (packet.playerEval) {
+                    // A Stackrabbit evaluation for the most recent placement.
+                    this.game.eval[packet.playerId] = packet.playerEval;
+                    this.handleEval(packet.playerId, packet.playerEval);
+                }
                 break;
         }
     }
