@@ -348,7 +348,7 @@ class Commentary {
         if (million >= 2) {
             string += `${Commentary.#numbers[million]} million `;
         } else if (million === 1) {
-            string += "A million ";
+            string += "a million ";
         }
 
         // Hundred thousands.
@@ -543,7 +543,7 @@ class Commentary {
             "give it up for {{playerName}}!"
         ];
 
-        intro += ` ,, ${nameLines[Math.floor(Math.random() * nameLines.length)].replace("{{playerName}}", name1)}`;
+        intro += ` ${nameLines[Math.floor(Math.random() * nameLines.length)].replace("{{playerName}}", name1)}`;
 
         const rightLines = [
             "And on the right,",
@@ -559,7 +559,7 @@ class Commentary {
 
         intro += ` and a PB of ${Commentary.numberToSpeech(player2.highscore)},`;
 
-        intro += ` ${nameLines[Math.floor(Math.random() * nameLines.length)].replace("{{playerName}}", name2)} ,,`;
+        intro += ` ${nameLines[Math.floor(Math.random() * nameLines.length)].replace("{{playerName}}", name2)}`;
 
         return intro;
     }
