@@ -3,6 +3,6 @@
     "@eslint/js": "9.39.1",
     "@stylistic/eslint-plugin": "5.6.1",
     "@types/chrome": "0.1.31",
-    "eslint-plugin-jsdoc": "61.3.0"
+    "eslint-plugin-jsdoc": "61.4.0"
   }
 }
